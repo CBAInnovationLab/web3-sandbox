@@ -1,0 +1,25 @@
+{
+  "name": "web3-sandbox",
+  "version": "0.1.0",
+  "description": "Sandbox app to throw load at an instance of ethermint",
+  "main": "index.js",
+  "scripts": {
+    "ethermint:init": "rm -Rf data && ethermint --datadir ./data init ./genesis.json",
+    "ethermint:start": "ethermint --datadir ./data --rpc --rpcapi \"admin,db,eth,debug,miner,net,shh,txpool,personal,web3\" --rpcaddr \"0.0.0.0\" --rpccorsdomain \"*\" --gasprice \"0\" --gpomin \"0\"",
+    "start": "node index.js"
+  },
+  "author": "Dan Turner <dan.turner@cba.com.au>",
+  "license": "MIT",
+  "dependencies": {
+    "babel-core": "^6.20.0",
+    "babel-polyfill": "^6.20.0",
+    "babel-preset-es2015-node5": "^1.2.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "babel-register": "^6.18.0",
+    "ethereumjs-tx": "^1.1.4",
+    "ethereumjs-util": "^5.0.1",
+    "hooked-web3-provider": "^1.0.0",
+    "keythereum": "^0.3.2",
+    "web3": "^0.17.0-beta"
+  }
+}
