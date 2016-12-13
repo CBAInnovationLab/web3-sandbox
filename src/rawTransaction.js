@@ -4,8 +4,8 @@ import web3 from './web3client'
 import { coinbase, another, keys } from './keys'
 
 
-export function signTransaction(rawTx, from) {
-  var account = keys[from]
+export function signTransaction(rawTx) {
+  var account = keys[rawTx.from]
   if(!account) {
     throw new Error(`No private key for account "${from}"`)
   }
