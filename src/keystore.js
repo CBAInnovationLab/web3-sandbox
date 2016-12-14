@@ -39,6 +39,7 @@ const signTransaction = async function signTransaction(tx_params,callback) {
   if (tx_params.data != null) {
     rawTx.data = tx_params.data
   }
+
   const tx = new Tx(rawTx)
 
   tx.sign(account.privateKey)

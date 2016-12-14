@@ -467,11 +467,7 @@ balanced-match@^0.4.1:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-0.4.2.tgz#cb3f3e3c732dc0f01ee70b403f302e61d7709838"
 
-"bignumber.js@git+https://github.com/debris/bignumber.js.git#94d7146671b9719e00a09c29b01a691bc85048c2":
-  version "2.0.7"
-  resolved "git+https://github.com/debris/bignumber.js.git#94d7146671b9719e00a09c29b01a691bc85048c2"
-
-"bignumber.js@github:debris/bignumber.js#master":
+bignumber.js@debris/bignumber.js#master:
   version "2.0.7"
   resolved "https://codeload.github.com/debris/bignumber.js/tar.gz/94d7146671b9719e00a09c29b01a691bc85048c2"
 
@@ -613,6 +609,16 @@ elliptic@^6.2.3:
     brorand "^1.0.1"
     hash.js "^1.0.0"
     inherits "^2.0.1"
+
+es6-promise@^4.0.3:
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-4.0.5.tgz#7882f30adde5b240ccfa7f7d78c548330951ae42"
+
+es6-promisify@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/es6-promisify/-/es6-promisify-5.0.0.tgz#5109d62f3e56ea967c4b63505aef08291c8a5203"
+  dependencies:
+    es6-promise "^4.0.3"
 
 escape-string-regexp@^1.0.2:
   version "1.0.5"
@@ -775,6 +781,10 @@ nan@^2.0.5, nan@^2.2.1:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.4.0.tgz#fb3c59d45fe4effe215f0b890f8adf6eb32d2232"
 
+"net@>= 1.0.0":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/net/-/net-1.0.2.tgz#d1757ec9a7fb2371d83cf4755ce3e27e10829388"
+
 number-is-nan@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/number-is-nan/-/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
@@ -907,7 +917,7 @@ validator@4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/validator/-/validator-4.0.2.tgz#70a1c2525ec4744e409971c1b298aa69a7534251"
 
-web3@0.15.1:
+web3@0.15.1, web3@^0.15.1:
   version "0.15.1"
   resolved "https://registry.yarnpkg.com/web3/-/web3-0.15.1.tgz#65b17fd3be991de4983c3558cc1f0b9aab3a0a10"
   dependencies:
@@ -916,14 +926,12 @@ web3@0.15.1:
     utf8 "^2.1.1"
     xmlhttprequest "*"
 
-web3@^0.17.0-beta:
-  version "0.17.0-beta"
-  resolved "https://registry.yarnpkg.com/web3/-/web3-0.17.0-beta.tgz#57af38245bff7a32099f7ce5780fad5bbc00da5b"
+web3_ipc@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/web3_ipc/-/web3_ipc-1.4.0.tgz#8d246123d81fd9e0cd1f0a16aef31eecb999af4a"
   dependencies:
-    bignumber.js "git+https://github.com/debris/bignumber.js.git#94d7146671b9719e00a09c29b01a691bc85048c2"
-    crypto-js "^3.1.4"
-    utf8 "^2.1.1"
-    xmlhttprequest "*"
+    net ">= 1.0.0"
+    web3 "^0.15.1"
 
 xmlhttprequest@*:
   version "1.8.0"
