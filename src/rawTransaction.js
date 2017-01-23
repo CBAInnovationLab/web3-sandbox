@@ -5,14 +5,14 @@ import { coinbase, another, keys } from './keys'
 
 
 export function signTransaction(rawTx) {
-  var account = keys[rawTx.from]
+  const account = keys[rawTx.from]
   if(!account) {
     throw new Error(`No private key for account "${from}"`)
   }
-  var privateKey = account.privateKey
-  var tx = new Tx(rawTx)
+  const privateKey = account.privateKey
+  const tx = new Tx(rawTx)
   tx.sign(privateKey)
-  var serializedTx = tx.serialize()
+  const serializedTx = ethUtil.addHexPrefix(tx.serialize().toString('hex'))
 
   return serializedTx.toString('hex')
 }
