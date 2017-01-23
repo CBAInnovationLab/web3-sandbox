@@ -132,3 +132,4 @@ fabric.properties
 
 ### Web3 Sandbox Extras ###
 data/
+build/

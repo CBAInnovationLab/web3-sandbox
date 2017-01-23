@@ -5,6 +5,7 @@ It assumes that you already have Node.JS, [yarn](https://yarnpkg.com/) and [Ethe
 
 ### Running
 1. `yarn install` to install node_modules
-1. `npm ethermint:init` to initialise a fresh chain
-1. `npm ethermint:start` to start ethermint
-1. `npm start` to run the app
+1. `npm run ethermint:init` to initialise a fresh chain
+1. `npm run ethermint:start` to start ethermint
+1. `npm start` to run the load generation app
+1. Or `npm run contracts:deploy` to deploy a test contract

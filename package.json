@@ -6,11 +6,14 @@
   "scripts": {
     "ethermint:init": "rm -Rf data && ethermint --datadir ./data init ./genesis.json",
     "ethermint:start": "ethermint --datadir ./data --rpc --rpcapi \"admin,db,eth,debug,miner,net,shh,txpool,personal,web3\" --rpcaddr \"0.0.0.0\" --rpccorsdomain \"*\" --gasprice \"0\" --gpomin \"0\"",
+    "contracts:compile": "./node_modules/babel-cli/bin/babel-node.js ./node_modules/gulp/bin/gulp.js compile",
+    "contracts:deploy": "./node_modules/babel-cli/bin/babel-node.js ./node_modules/gulp/bin/gulp.js deploy",
     "start": "node index.js"
   },
   "author": "Dan Turner <dan.turner@cba.com.au>",
   "license": "MIT",
   "dependencies": {
+    "babel-cli": "^6.22.2",
     "babel-core": "^6.20.0",
     "babel-polyfill": "^6.20.0",
     "babel-preset-es2015-node5": "^1.2.0",
@@ -19,8 +22,13 @@
     "es6-promisify": "^5.0.0",
     "ethereumjs-tx": "^1.1.4",
     "ethereumjs-util": "^5.0.1",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-util": "^3.0.8",
     "hooked-web3-provider": "^1.0.0",
     "keythereum": "^0.3.2",
+    "through2": "^2.0.3",
     "web3_ipc": "^1.4.0"
   }
 }
