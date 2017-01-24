@@ -37,9 +37,12 @@ gulp.task('compile', [ 'concat' ], function() {
 
 gulp.task('deploy', [ 'compile' ], async function () {
   const binaries = require(`./${paths.build}/contracts.compiled.json`)
-  const contract = await deploy(web3, coinbase.address, 'SimpleStorage', binaries.SimpleStorage, 123)
-  var storedData = contract.get.call();
-  console.log(`Stored Data: ${storedData}`)
+  console.log(`Iterations: ${config.deployIterations}`)
+  for (var i = 1; i <= config.deployIterations; i++) {
+    const contract = await deploy(web3, coinbase.address, 'SimpleStorage', binaries.SimpleStorage, i)
+    var storedData = contract.get.call();
+    console.log(`- Stored Data: ${storedData}`)
+  }
 })
 
 gulp.task('default', ['concat', 'compile'])

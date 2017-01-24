@@ -17,10 +17,8 @@ async function main() {
   const block = await web3.eth.getBlockNumber()
   console.log(`Block #: ${block}`)
 
-  const iterations = 10000
-
   /* Use hooked-web3-provider */
-  // for(var i = 1; i <= iterations; i++) {
+  // for(var i = 1; i <= config.txIterations; i++) {
   //   var result = await web3.eth.sendTransaction({
   //     from: coinbase.address,
   //     to: another.address,
@@ -33,7 +31,7 @@ async function main() {
   const startingNonce = await web3.eth.getTransactionCount(coinbase.address, 'pending')
   console.log(`Nonce: ${startingNonce}`)
   start = new Date()
-  for(var i = 0; i < iterations; i++) {
+  for(var i = 0; i < config.txIterations; i++) {
     var rawTx = {
       from: coinbase.address,
       to: another.address,
