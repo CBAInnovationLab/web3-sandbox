@@ -27,6 +27,13 @@ async function main() {
   //   console.log(result)
   // }
 
+  const coinbaseInitialBalance = web3.eth.getBalance(coinbase.address)
+  const anotherInitialBalance = web3.eth.getBalance(another.address)
+
+  console.log(`Coinbase Balance: ${coinbaseInitialBalance.toFormat()}`)
+  console.log(`Another Balance: ${anotherInitialBalance.toFormat()}`)
+  console.log(`Total: ${(coinbaseInitialBalance.add(anotherInitialBalance)).toFormat()}`)
+
   /* Use raw transactions */
   const startingNonce = await web3.eth.getTransactionCount(coinbase.address, 'pending')
   console.log(`Nonce: ${startingNonce}`)
