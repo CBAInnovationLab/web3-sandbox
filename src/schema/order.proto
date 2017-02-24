@@ -1,0 +1,9 @@
+message Order {
+  message PricePoint {
+    required uint32 price = 1;
+    required uint32 volume = 2;
+  }
+  repeated PricePoint point = 1;
+  required bytes addr = 2;
+}
+

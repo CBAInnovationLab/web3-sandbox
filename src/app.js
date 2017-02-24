@@ -4,6 +4,7 @@ import web3 from './web3client'
 import { coinbase, another, keys, generateKey } from './keys'
 import { signTransaction } from './rawTransaction'
 import keythereum from 'keythereum'
+import protobuf from './protobuf'
 
 console.log(`Geth URL: ${config.gethUrl}`)
 
@@ -62,3 +63,4 @@ main().then(() => {
 }).catch(err => {
   console.error(err)
 })
+

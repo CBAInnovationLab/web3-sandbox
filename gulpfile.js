@@ -16,6 +16,11 @@ var paths = {
   build: 'build'
 }
 
+gulp.task('generate', function() {
+  console.log('Generating model code...')
+  
+})
+
 gulp.task('concat', function(){
   return gulp.src(paths.src)
   .pipe(concat('contracts.concat.sol'))
@@ -39,9 +44,22 @@ gulp.task('deploy', [ 'compile' ], async function () {
   const binaries = require(`./${paths.build}/contracts.compiled.json`)
   console.log(`Iterations: ${config.deployIterations}`)
   for (var i = 1; i <= config.deployIterations; i++) {
-    const contract = await deploy(web3, coinbase.address, 'SimpleStorage', binaries.SimpleStorage, i)
-    var storedData = contract.get.call();
+
+    const ppCodecContract = await deploy(web3, coinbase.address, 'PricePointCodec', binaries.PricePointCodec, i)
+    const orderCodecContract = await deploy(web3, coinbase.address, 'OrderCodec', binaries.OrderCodec, i)
+    const dataContract = await deploy(web3, coinbase.address, 'SimpleStorage', binaries.SimpleStorage, i)
+    const pbufsContract = await deploy(web3, coinbase.address, 'ProtobufConsumer', binaries.ProtobufConsumer, i)
+  
+    console.log('-------------------------------------------------')
+    console.log('PricePointCodec Address:    ' + ppCodecContract)
+    console.log('OrderCodec Address:         ' + orderCodecContract)
+    console.log('SimpleStorage Address:      ' + dataContract)
+    console.log('ProtobufConsumer Address:   ' + pbufsContract)
+    console.log('-------------------------------------------------')
+
+    var storedData = dataContract.get.call();
     console.log(`- Stored Data: ${storedData}`)
+    console.log(pbufsContract)
   }
 })
 
