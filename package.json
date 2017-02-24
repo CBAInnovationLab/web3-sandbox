@@ -8,7 +8,8 @@
     "ethermint:start": "ethermint --datadir ./data --rpc --rpcapi \"admin,db,eth,debug,miner,net,shh,txpool,personal,web3\" --rpcaddr \"0.0.0.0\" --rpccorsdomain \"*\" --gasprice \"0\" --gpomin \"0\"",
     "contracts:compile": "./node_modules/babel-cli/bin/babel-node.js ./node_modules/gulp/bin/gulp.js compile",
     "contracts:deploy": "./node_modules/babel-cli/bin/babel-node.js ./node_modules/gulp/bin/gulp.js deploy",
-    "start": "node index.js"
+    "start": "node index.js",
+    "protobuf-test": "node protobuf-test.js"
   },
   "author": "Dan Turner <dan.turner@cba.com.au>",
   "license": "MIT",
@@ -22,6 +23,7 @@
     "es6-promisify": "^5.0.0",
     "ethereumjs-tx": "^1.1.4",
     "ethereumjs-util": "^5.0.1",
+    "google-protobuf": "^3.2.0",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.1",
     "gulp-rename": "^1.2.2",

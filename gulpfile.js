@@ -50,13 +50,6 @@ gulp.task('deploy', [ 'compile' ], async function () {
     const dataContract = await deploy(web3, coinbase.address, 'SimpleStorage', binaries.SimpleStorage, i)
     const pbufsContract = await deploy(web3, coinbase.address, 'ProtobufConsumer', binaries.ProtobufConsumer, i)
   
-    console.log('-------------------------------------------------')
-    console.log('PricePointCodec Address:    ' + ppCodecContract)
-    console.log('OrderCodec Address:         ' + orderCodecContract)
-    console.log('SimpleStorage Address:      ' + dataContract)
-    console.log('ProtobufConsumer Address:   ' + pbufsContract)
-    console.log('-------------------------------------------------')
-
     var storedData = dataContract.get.call();
     console.log(`- Stored Data: ${storedData}`)
     console.log(pbufsContract)
