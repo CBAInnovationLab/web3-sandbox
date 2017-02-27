@@ -9,7 +9,6 @@ contract ProtobufConsumer {
   /* External functions in Solidity cannot take structs as arguments, so we
      take an encoded bytestring instead. */
   function addOrder(bytes data) {
-    bytes memory data2 = new bytes(12);
     /* We can decode the binary into a struct in memory. */
     OrderCodec.Order memory order = OrderCodec.decode(data);
 
@@ -25,13 +24,5 @@ contract ProtobufConsumer {
     OrderCodec.store(order, orders[orders.length-1]);
   }
 
-
-  function readAddress(bytes xs) returns (address) {
-    address a;
-    assembly {
-      a := div(mload(add(32,xs)),exp(2,96))
-    }
-    return a;
-  }
 }
 
