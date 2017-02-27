@@ -22,14 +22,15 @@ function encodeOrder(pricePoints, address) {
     point.setVolume(x.volume)
     order.addPoint(point)
   })
-  return new Uint8Array(order.serializeBinary());
+  return "0x" + (new Buffer(order.serializeBinary())).toString('hex');
+
 }
 
 async function deployContracts() {
     const pricePointCodec = await deploy(web3, coinbase.address, 'PricePointCodec', binaries.PricePointCodec, 1)
     const orderCodec = await deploy(web3, coinbase.address, 'OrderCodec', binaries.OrderCodec, 1)
     const protobufConsumer = await deploy(web3, coinbase.address, 'ProtobufConsumer', binaries.ProtobufConsumer, 1)
-  
+    console.log(binaries.ProtobufConsumer) 
     console.log('-------------------------------------------------')
     console.log('PricePointCodec Address:    ' + pricePointCodec.address)
     console.log('OrderCodec Address:         ' + orderCodec.address)
@@ -42,14 +43,17 @@ async function deployContracts() {
 async function main() {
   const {protobufConsumer} = await deployContracts()
   const order = encodeOrder([{price: 5, volume: 10},{price: 6, volume: 11}], [0])
+  console.log(order)
   await new Promise((resolve,reject) => 
-    protobufConsumer.addOrder.call(order, { from: coinbase.address, gas: 4700000 }, (err, result) => {
+    protobufConsumer.addOrder(order, { from: coinbase.address, gas: 4700000 }, (err, result) => {
       if (err) {
         console.error("Error: " + err)
         reject(err)
-      } else {
+      } else if (result) {
         console.log("Success: " + result)
         resolve(result)
+      } else {
+        console.log("Waiting for tx hash...")
       }
     })
   )
