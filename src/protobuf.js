@@ -1,12 +1,8 @@
-import promisify from 'es6-promisify'
-import keythereum from 'keythereum'
-
-import { compile, deploy } from './gulp-eth'
+import { deploy } from './gulp-eth'
 import binaries from '../build/contracts.compiled.json'
 import config from './config'
 import web3 from './web3client'
-import { coinbase, another, keys, generateKey } from './keys'
-import { signTransaction } from './rawTransaction'
+import { coinbase } from './keys'
 import protobuf from './protobuf'
 
 import OrderCodec from '../build/order_pb.js'
