@@ -26,7 +26,7 @@ gulp.task('concat', function(){
 gulp.task('compile', [ 'concat' ], function() {
   console.log('Using Geth @ \'' + config.gethUrl + '\'')
   return gulp.src(paths.build + '/*.sol')
-  .pipe(compile(web3))
+  .pipe(compile())
   .pipe(rename(function (path) {
     path.basename = path.basename.replace('.concat', '.compiled')
     path.extname = ".json"
@@ -39,7 +39,7 @@ gulp.task('deploy', [ 'compile' ], async function () {
   const binaries = require(`./${paths.build}/contracts.compiled.json`)
   console.log(`Iterations: ${config.deployIterations}`)
   for (var i = 1; i <= config.deployIterations; i++) {
-    const contract = await deploy(web3, coinbase.address, 'SimpleStorage', binaries.SimpleStorage, i)
+    const contract = await deploy(web3, coinbase.address, 'SimpleStorage', binaries.contracts[':SimpleStorage'], i)
     var storedData = contract.get.call();
     console.log(`- Stored Data: ${storedData}`)
   }

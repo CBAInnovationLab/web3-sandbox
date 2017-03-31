@@ -1,11 +1,13 @@
 import through from 'through2'
+import solc from 'solc'
+import ethUtil from 'ethereumjs-util'
 
-export function compile(web3) {
+export function compile() {
   return through.obj(function CompilePlugin(file, encoding, done) {
     this.push(file)
     if (file.isBuffer()) {
       var source = file.contents.toString('utf8')
-      var compiled = web3.eth.compile.solidity(source)
+      const compiled = solc.compile(source)
       file.contents = new Buffer(JSON.stringify(compiled))
     }
     return done()
@@ -29,12 +31,10 @@ export async function deploy(web3, fromAddress, name, compiled, ...ctorArgs) {
         }
       }
     }
-
-    var contract = web3.eth.contract(compiled.info.abiDefinition)
-
+    var contract = web3.eth.contract(JSON.parse(compiled.interface))
     const options = {
       from: fromAddress,
-      data: compiled.code,
+      data: ethUtil.addHexPrefix(compiled.bytecode),
       gas: 4000001
     }
 

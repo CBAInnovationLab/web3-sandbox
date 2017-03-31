@@ -28,6 +28,7 @@
     "gulp-util": "^3.0.8",
     "hooked-web3-provider": "^1.0.0",
     "keythereum": "^0.3.2",
+    "solc": "^0.4.10",
     "through2": "^2.0.3",
     "web3_ipc": "^1.4.0"
   }
