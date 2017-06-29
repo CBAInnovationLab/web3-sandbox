@@ -1,5 +1,5 @@
-import promisify from 'es6-promisify'
 import config from './config'
+import { sleep } from './utils'
 import web3 from './web3client'
 import { coinbase, another, keys, generateKey } from './keys'
 import { signTransaction } from './rawTransaction'
@@ -7,37 +7,17 @@ import keythereum from 'keythereum'
 
 console.log(`Geth URL: ${config.gethUrl}`)
 
-web3.eth.getBlockNumber = promisify(web3.eth.getBlockNumber)
-web3.eth.getTransactionCount = promisify(web3.eth.getTransactionCount)
-web3.eth.sendTransaction = promisify(web3.eth.sendTransaction)
-web3.eth.sendRawTransaction = promisify(web3.eth.sendRawTransaction)
-
-var start
 async function main() {
-  const block = await web3.eth.getBlockNumber()
-  console.log(`Block #: ${block}`)
-
-  /* Use hooked-web3-provider */
-  // for(var i = 1; i <= config.txIterations; i++) {
-  //   var result = await web3.eth.sendTransaction({
-  //     from: coinbase.address,
-  //     to: another.address,
-  //     value: 1,
-  //   })
-  //   console.log(result)
-  // }
-
   const coinbaseInitialBalance = web3.eth.getBalance(coinbase.address)
   const anotherInitialBalance = web3.eth.getBalance(another.address)
-
-  console.log(`Coinbase Balance: ${coinbaseInitialBalance.toFormat()}`)
-  console.log(`Another Balance: ${anotherInitialBalance.toFormat()}`)
-  console.log(`Total: ${(coinbaseInitialBalance.add(anotherInitialBalance)).toFormat()}`)
+  const initialSum = coinbaseInitialBalance.add(anotherInitialBalance);
 
   /* Use raw transactions */
-  const startingNonce = await web3.eth.getTransactionCount(coinbase.address, 'pending')
+  const startingNonce = await web3.eth.getTransactionCountAsync(coinbase.address, 'pending')
   console.log(`Nonce: ${startingNonce}`)
-  start = new Date()
+
+  /* Prepare signed txs */
+  const signedTxs = [];
   for(var i = 0; i < config.txIterations; i++) {
     var rawTx = {
       from: coinbase.address,
@@ -50,15 +30,52 @@ async function main() {
     }
 
     var signedTx = signTransaction(rawTx)
-    const result = await web3.eth.sendRawTransaction(signedTx)
+    signedTxs.push(signedTx)
+  }
+
+  /* Send signed txs */
+  const firstBlock = await web3.eth.getBlockNumberAsync()
+  const start = new Date()
+  for(var i = 0; i < signedTxs.length; i++) {
+    const result = await web3.eth.sendRawTransactionAsync(signedTxs[i])
     console.log(result)
   }
+  const end = new Date()
+
+  console.log('\n(Giving the last txs 3 seconds to finalise...)')
+  await sleep(3000);
+  const lastBlock = await web3.eth.getBlockNumberAsync()
+
+  const coinbaseFinalBalance = web3.eth.getBalance(coinbase.address)
+  const anotherFinalBalance = web3.eth.getBalance(another.address)
+  const finalSum = coinbaseFinalBalance.add(anotherFinalBalance)
+  const delta = finalSum.sub(initialSum);
+
+  console.log(`\nInitial Balances\n----------------`);
+  console.log(`Coinbase: ${coinbaseInitialBalance.toFormat()}`)
+  console.log(`Another: ${anotherInitialBalance.toFormat()}`)
+  console.log(`Sum: ${initialSum.toFormat()}`)
+
+  console.log(`\nFinal Balances\n--------------`);
+  console.log(`Coinbase: ${coinbaseFinalBalance.toFormat()}`)
+  console.log(`Another: ${anotherFinalBalance.toFormat()}`)
+  console.log(`Sum: ${finalSum.toFormat()}`)
+
+  console.log('\nDeltas\n------')
+  console.log(`Coinbase: ${coinbaseFinalBalance.sub(coinbaseInitialBalance).toFormat()}`)
+  console.log(`Another: ${anotherFinalBalance.sub(anotherInitialBalance).toFormat()}`)
+  console.log(`Sum: ${finalSum.sub(initialSum).toFormat()}`)
+
+  console.log('\nBlocks\n------')
+  console.log(`First: ${firstBlock}`)
+  console.log(`Last: ${lastBlock}`)
+  console.log(`Count: ${lastBlock - firstBlock}`)
+
+  console.log(`\nDuration (ms): ${end - start}`)
 }
 
 main().then(() => {
-  var end = new Date()
-  console.log(`Duration (ms): ${end - start}`)
-  console.log('Goodbye')
+  console.log('\nGoodbye')
 }).catch(err => {
   console.error(err)
 })
