@@ -13,7 +13,7 @@ async function main() {
   const initialSum = coinbaseInitialBalance.add(anotherInitialBalance);
 
   /* Use raw transactions */
-  const startingNonce = await web3.eth.getTransactionCountAsync(coinbase.address, 'pending')
+  const startingNonce = await web3.eth.getTransactionCountAsync(coinbase.address)
   console.log(`Nonce: ${startingNonce}`)
 
   /* Prepare signed txs */
