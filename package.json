@@ -26,10 +26,10 @@
     "gulp-concat": "^2.6.1",
     "gulp-rename": "^1.2.2",
     "gulp-util": "^3.0.8",
-    "hooked-web3-provider": "^1.0.0",
+    "hooked-web3-provider": "github:CBAInnovationLab/hooked-web3-provider#master",
     "keythereum": "^0.3.2",
     "solc": "^0.4.10",
     "through2": "^2.0.3",
-    "web3_ipc": "^1.4.0"
+    "web3": "github:CBAInnovationLab/web3.js#master"
   }
 }
